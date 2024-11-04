@@ -9,6 +9,13 @@ public class SimpleMenu implements Menu {
     @Override
     public boolean add(String parentName, String childName, ActionDelegate actionDelegate) {
    /*  добавьте реализацию*/
+        MenuItem item = new SimpleMenuItem(childName, actionDelegate);
+        for (MenuItem i : rootElements) {
+            if (parentName.equals(i.getName())) {
+                i.getChildren().add(item);
+                return true;
+            }
+        }
         return  false;
     }
 
@@ -20,12 +27,22 @@ public class SimpleMenu implements Menu {
 
     @Override
     public Iterator<MenuItemInfo> iterator() {
-        /*  добавьте реализацию*/
+                /*  добавьте реализацию*/
         return null;
     }
 
     private Optional<ItemInfo> findItem(String name) {
         /*  добавьте реализацию*/
+        MenuItem item;
+        String number;
+        DFSIterator iterator = new DFSIterator();
+        while (iterator.hasNext()) {
+            item = iterator.next().menuItem;
+            number = iterator.numbers.getLast();
+            if (name.equals(item.getName())) {
+                return Optional.of(new ItemInfo(item, number));
+            }
+        }
         return null;
     }
 
