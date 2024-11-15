@@ -54,10 +54,12 @@ public class SimpleMenuTest {
         menu.add(Menu.ROOT, "Работать", STUB_ACTION);
         menu.add("Сходить в магазин", "Купить продукты", STUB_ACTION);
         menu.add("Работать", "Созвон", STUB_ACTION);
+        menu.add("Купить продукты", "Купить хлеб", STUB_ACTION);
         String expected = "1. Сходить в магазин" + ln
-                + "1.1. Купить продукты" + ln
+                + "----1.1. Купить продукты" + ln
+                + "--------1.1.1. Купить хлеб" + ln
                 + "2. Работать" + ln
-                + "2.1. Созвон" + ln;
+                + "----2.1. Созвон" + ln;
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         System.setOut(new PrintStream(output));
         printer.print(menu);

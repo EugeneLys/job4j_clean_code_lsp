@@ -1,5 +1,6 @@
 package ru.job4j.ood.isp.menu;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -7,7 +8,8 @@ import java.util.Scanner;
  * Добавить элемент в корень меню;
  * Добавить элемент к родительскому элементу;
  * Вызвать действие, привязанное к пункту меню (действие можно сделать константой,
- * например, ActionDelete DEFAULT_ACTION = () -> System.out.println("Some action") и указывать при добавлении элемента в меню);
+ * например, ActionDelete DEFAULT_ACTION = () -> System.out.println("Some action")
+ * и указывать при добавлении элемента в меню);
  * Вывести меню в консоль.
  */
 public class TodoApp {
@@ -31,25 +33,27 @@ public class TodoApp {
                 menu.add(Menu.ROOT, name, app.action);
             }
             if ("2".equals(answer)) {
-                out("Введите название основного пункта меню:");
+                out("Введите название дополняемого пункта меню:");
                 var parent = scanner.nextLine();
-                while (menu.select(parent).isEmpty()) {
+                while (menu.select(parent).isEmpty() && !"0".equals(parent)) {
                     out("Повторите ввод или введите '0'");
                     parent = scanner.nextLine();
                 }
-                out("Введите название подпункта:");
-                var child = scanner.nextLine();
-                menu.add(parent, child, app.action);
+                if (!"0".equals(parent)) {
+                    out("Введите название подпункта:");
+                    var child = scanner.nextLine();
+                    menu.add(parent, child, app.action);
+                }
             }
             if ("3".equals(answer)) {
                 out("Введите название пункта, действие которого вы хотите вызвать:");
                 var name = scanner.nextLine();
-                menu.select(name).get().getActionDelegate().delegate();
+                var act = menu.select(name);
+                act.ifPresent(menuItemInfo -> menuItemInfo.getActionDelegate().delegate());
             }
             if ("4".equals(answer)) {
                 printer.print(menu);
             }
-            answer = null;
             request();
         }
     }
@@ -57,8 +61,8 @@ public class TodoApp {
     private static void request() {
         var ls = System.lineSeparator();
         out("Выберите действие (введите число):" + ls
-                + "1 - Добавить основной пункт в меню" + ls
-                + "2 - Добавить подпункт в основной пункт меню" + ls
+                + "1 - Добавить пункт в меню" + ls
+                + "2 - Добавить подпункт в существующий пункт меню" + ls
                 + "3 - Вызвать действие из пункта меню" + ls
                 + "4 - Вывести меню в консоль" + ls
                 + "0 - Завершить." + ls);
