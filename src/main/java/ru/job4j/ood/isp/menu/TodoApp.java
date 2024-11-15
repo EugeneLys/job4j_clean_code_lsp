@@ -14,7 +14,7 @@ import java.util.Scanner;
  */
 public class TodoApp {
 
-    ActionDelegate action = () -> System.out.println("Some action");
+    private ActionDelegate action = () -> System.out.println("Some action");
 
     public static void main(String[] args) {
         Menu menu = new SimpleMenu();

@@ -100,9 +100,9 @@ public class SimpleMenu implements Menu {
 
     private class DFSIterator implements Iterator<ItemInfo> {
 
-        Deque<MenuItem> stack = new LinkedList<>();
+        private Deque<MenuItem> stack = new LinkedList<>();
 
-        Deque<String> numbers = new LinkedList<>();
+        private Deque<String> numbers = new LinkedList<>();
 
         DFSIterator() {
             int number = 1;
@@ -136,8 +136,8 @@ public class SimpleMenu implements Menu {
 
     private class ItemInfo {
 
-        MenuItem menuItem;
-        String number;
+        private MenuItem menuItem;
+        private String number;
 
         public ItemInfo(MenuItem menuItem, String number) {
             this.menuItem = menuItem;
